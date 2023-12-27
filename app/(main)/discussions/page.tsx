@@ -1,11 +1,11 @@
 import React from 'react';
 
-const EmptyPage = () => {
+const Discussions = () => {
     return (
         <div className="grid">
             <div className="col-12">
                 <div className="card">
-                    <h5>Empty Page</h5>
+                    <h5>Discussions</h5>
                     <p>Use this page to start from scratch and place your custom content.</p>
                 </div>
             </div>
@@ -13,4 +13,4 @@ const EmptyPage = () => {
     );
 };
 
-export default EmptyPage;
+export default Discussions;
