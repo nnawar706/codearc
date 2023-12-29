@@ -4,8 +4,6 @@ import React, { useContext } from 'react';
 import AppMenuitem from './AppMenuitem';
 import { LayoutContext } from './context/layoutcontext';
 import { MenuProvider } from './context/menucontext';
-import Link from 'next/link';
-import { AppMenuItem } from '../types/types';
 import { menu } from '../demo/constants/SidebarMenu'
 
 const AppMenu = () => {

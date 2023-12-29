@@ -1,7 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { useRouter } from "next/navigation";
 import {
   useEventListener,
   useMountEffect,
@@ -12,7 +10,6 @@ import { classNames } from "primereact/utils";
 import AppFooter from "./AppFooter";
 import AppSidebar from "./AppSidebar";
 import AppTopbar from "./AppTopbar";
-import AppConfig from "./AppConfig";
 import { LayoutContext } from "./context/layoutcontext";
 import { PrimeReactContext } from "primereact/api";
 import { ChildContainerProps, LayoutState, AppTopbarRef } from "../types/types";

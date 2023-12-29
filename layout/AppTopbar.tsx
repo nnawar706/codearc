@@ -25,9 +25,11 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
                 <span>SAKAI</span>
             </Link>
 
-            <button ref={menubuttonRef} type="button" className="p-link layout-menu-button layout-topbar-button" onClick={onMenuToggle}>
-                <i className="pi pi-bars" />
-            </button>
+            <SignedIn>
+                <button ref={menubuttonRef} type="button" className="p-link layout-menu-button layout-topbar-button" onClick={onMenuToggle}>
+                    <i className="pi pi-bars" />
+                </button>
+            </SignedIn>
 
             <button ref={topbarmenubuttonRef} type="button" className="p-link layout-topbar-menu-button layout-topbar-button" onClick={showProfileSidebar}>
                 <i className="pi pi-ellipsis-v" />

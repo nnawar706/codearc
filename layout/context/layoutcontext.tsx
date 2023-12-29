@@ -1,9 +1,11 @@
 'use client'
+
 import React, { useState, createContext } from 'react';
 import { LayoutState, ChildContainerProps, LayoutConfig, LayoutContextProps } from '../../types/types';
 export const LayoutContext = createContext({} as LayoutContextProps);
 
 export const LayoutProvider = ({ children }: ChildContainerProps) => {
+    
     const [layoutConfig, setLayoutConfig] = useState<LayoutConfig>({
         ripple: false,
         inputStyle: 'outlined',
@@ -14,7 +16,7 @@ export const LayoutProvider = ({ children }: ChildContainerProps) => {
     });
 
     const [layoutState, setLayoutState] = useState<LayoutState>({
-        staticMenuDesktopInactive: false,
+        staticMenuDesktopInactive: true, // sidebar menu active inactive
         overlayMenuActive: false,
         profileSidebarVisible: false,
         configSidebarVisible: false,
