@@ -1,35 +1,17 @@
-/* eslint-disable @next/next/no-img-element */
-'use client';
-import { Button } from 'primereact/button';
-import { TabView, TabPanel } from 'primereact/tabview';
-import Link from 'next/link';
-import { Dropdown } from 'primereact/dropdown';
-import { useState } from 'react';
+import { Skeleton } from "primereact/skeleton"
 
-import Loader from './loader';
-
-const Feed = () => {
-
-    const [loading, setLoading] = useState<boolean>(true);
-
-    return loading ? <Loader/> : (
+const Loader = () => {
+    return (
         <div className="grid">
             <div className="col-10 col-offset-1 lg:col-8 lg:col-offset-2">
                 <div
-                    className="px-4 py-5 shadow-2 flex flex-column md:flex-row md:align-items-center justify-content-between mb-3"
-                    style={{
-                        borderRadius: '1rem',
-                        background: 'linear-gradient(0deg, rgba(0, 123, 255, 0.5), rgba(0, 123, 255, 0.5)), linear-gradient(92.54deg, #1C80CF 47.88%, #FFFFFF 100.01%)'
-                    }}
+                    className="card px-4 py-5 flex flex-column md:flex-row md:align-items-center justify-content-between"
                 >
-                    <div>
-                        <div className="text-blue-100 font-medium text-lg mt-2 mb-3">Level up your publishing with our new suite of premium features</div>
-                        <div className="text-white font-medium text-3xl">Introducing CodeArc Pro</div>
-                    </div>
+                    <Skeleton height="2rem" className="w-8"></Skeleton>
                     <div className="mt-4 mr-auto md:mt-0 md:mr-0">
-                        <Link href="https://blocks.primereact.org" className="p-button font-bold px-5 py-3 p-button-warning p-button-rounded p-button-raised">
+                        {/* <Link href="https://blocks.primereact.org" className="p-button font-bold px-5 py-3 p-button-warning p-button-rounded p-button-raised">
                             Upgrade Now
-                        </Link>
+                        </Link> */}
                     </div>
                 </div>
 
@@ -37,12 +19,11 @@ const Feed = () => {
                     <div className="col-12 lg:col-8">
                         <div className="card">
                             <div className="flex align-items-center py-2 border-bottom-1 surface-border">
-                                <div className="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
-                                    <i className="pi pi-user text-xl text-blue-500" />
+                                <Skeleton shape="circle" size="3rem" className="mr-2"></Skeleton>
+                                <div className="text-800 line-height-3 font-medium">
+                                    <Skeleton height="1rem" width="7rem" className="mb-2"></Skeleton>
+                                    <Skeleton height="1rem" width="10rem"></Skeleton>
                                 </div>
-                                <span className="text-800 line-height-3 font-medium">
-                                    Richard Jones<br /><span className="text-600">29th Oct, 2023</span>
-                                </span>
                             </div>
                         </div>
                     </div>
@@ -55,21 +36,14 @@ const Feed = () => {
                             <div className="card">
                                 <div className="flex flex-column">
                                     <div className="flex align-items-center justify-content-between flex-wrap">
-                                        <h5 className="text-800">Drafts</h5>
-                                        <Button 
-                                        label="View all"
-                                        severity="info"
-                                        outlined
-                                        size="small"></Button>
+                                        <Skeleton height="1.5rem" width="6rem"/>
+                                        <Skeleton width="4rem"/>
                                     </div>
                                     <div className="mt-4">
-                                        <p className="text-800 font-medium">No Title</p>
+                                        <Skeleton width="15rem" className="mb-1"/>
                                         <div className="flex justify-content-between text-600">
-                                            <p className="">Modified 22 Nov</p>
-                                            <p className="cursor-pointer">
-                                                <i className="pi pi-pencil mr-1 underline"></i>
-                                                Continue Editing
-                                            </p>
+                                            <Skeleton width="8rem" />
+                                            <Skeleton width="5rem"/>
                                         </div>
                                     </div>
                                 </div>
@@ -80,20 +54,14 @@ const Feed = () => {
                             <div className="card">
                                 <div className="flex flex-column">
                                     <div className="flex align-items-center justify-content-between flex-wrap">
-                                        <h5 className="text-800">Treding Articles</h5>
-                                        <Dropdown
-                                        placeholder="1 week"
-                                        />
+                                        <Skeleton height="1.5rem" width="7rem"/>
+                                        <Skeleton width="4rem"/>
                                     </div>
                                     <div className="mt-3">
-                                        <p className="font-medium cursor-pointer">
-                                            CodeArc's Feed Architecture
-                                        </p>
+                                        <Skeleton width="15rem" className="mb-1"/>
                                         <div className="flex justify-content-between text-600">
-                                            <p className="">Florian Fuchs</p>
-                                            <p className="">
-                                                765 reads
-                                            </p>
+                                            <Skeleton width="8rem" />
+                                            <Skeleton width="5rem"/>
                                         </div>
                                     </div>
                                 </div>
@@ -103,9 +71,9 @@ const Feed = () => {
 
                             <div className="card">
                                 <div className="flex flex-column">
-                                    <h5 className="text-800">Bookmarks</h5>
+                                    <Skeleton height="1.5rem" width="7rem"/>
                                     <div className="flex justify-content-center">
-                                        Nothing here yet 👋
+                                        <Skeleton width="5rem"/>
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +84,7 @@ const Feed = () => {
                                 <div className="flex flex-column">
                                     <h5 className="text-800">Challenges</h5>
                                     <div>
-                                        <TabView>
+                                        {/* <TabView>
                                             <TabPanel header="Up For Grabs">
                                                 <div className="h-8rem">
                                                     <div className="flex">
@@ -154,7 +122,7 @@ const Feed = () => {
                                                     </div>
                                                 </div>
                                             </TabPanel>
-                                        </TabView>
+                                        </TabView> */}
                                     </div>
                                 </div>
                             </div>
@@ -165,9 +133,9 @@ const Feed = () => {
                                 <div className="flex flex-column mb-2 border-bottom-1 surface-border">
                                     <p className="font-medium">Connect with us</p>
                                     <div className="flex justify-content-start flex-wrap gap-3">
-                                        <Button icon="pi pi-facebook" rounded outlined aria-label="Filter" />
+                                        {/* <Button icon="pi pi-facebook" rounded outlined aria-label="Filter" />
                                         <Button icon="pi pi-youtube" rounded outlined aria-label="Filter" />
-                                        <Button icon="pi pi-linkedin" rounded outlined aria-label="Filter" />
+                                        <Button icon="pi pi-linkedin" rounded outlined aria-label="Filter" /> */}
                                     </div>
                                 </div>
                             </div>
@@ -176,7 +144,7 @@ const Feed = () => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Feed;
+export default Loader
