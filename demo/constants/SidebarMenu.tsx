@@ -1,5 +1,3 @@
-
-
 import { AppMenuItem } from '../../types/types';
 
 export const menu: AppMenuItem[] = [

@@ -36,7 +36,9 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
             <div ref={topbarmenuRef} className={classNames('layout-topbar-menu', { 'layout-topbar-menu-mobile-active': layoutState.profileSidebarVisible })}>
                 <AppConfig />
                 <SignedIn>
-                    <UserButton afterSignOutUrl={process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_OUT_URL}/>
+                    <button className="p-link layout-topbar-button">
+                        <UserButton afterSignOutUrl={process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_OUT_URL}/>
+                    </button>
                 </SignedIn>
                 <SignedOut>
                     <Link href="/sign-in">
@@ -46,12 +48,12 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
                         </button>
                     </Link>
                 </SignedOut>
-                <Link href="/">
+                {/* <Link href="/">
                     <button type="button" className="p-link layout-topbar-button">
                         <i className="pi pi-cog"></i>
                         <span>Settings</span>
                     </button>
-                </Link>
+                </Link> */}
             </div>
         </div>
     );
