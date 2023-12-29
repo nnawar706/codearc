@@ -1,6 +1,6 @@
 import {Schema, models, model} from "mongoose";
 
-const UserChallengeSchema = new Schema({
+const BlogSchema = new Schema({
     user: { type: Schema.Types.ObjectId, ref: "User" },
     title: { type: String, required: true },  
     detail: { type: String },
@@ -10,6 +10,6 @@ const UserChallengeSchema = new Schema({
     timestamps: true,
 })
 
-const UserChallenge = models.Challenge || model("UserChallenge", UserChallengeSchema)
+const Blog = models.Blog || model("Blog", BlogSchema)
 
-export default UserChallenge
+export default Blog

@@ -28,3 +28,13 @@ export interface IBlogStatus extends Document {
     name: string;
 }
 
+export interface IBlog extends Document {
+    _id: string;
+    user: IUser;
+    title: string;
+    detail: string;
+    readers: number;
+    status: IBlogStatus;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
