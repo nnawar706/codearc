@@ -1,6 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
-
 import Link from 'next/link';
+import {SignedIn, SignedOut, UserButton} from "@clerk/nextjs";
 import { classNames } from 'primereact/utils';
 import React, { forwardRef, useContext, useImperativeHandle, useRef } from 'react';
 import { AppTopbarRef } from '../types/types';
@@ -35,15 +34,18 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
             </button>
 
             <div ref={topbarmenuRef} className={classNames('layout-topbar-menu', { 'layout-topbar-menu-mobile-active': layoutState.profileSidebarVisible })}>
-                {/* <button type="button" className="p-link layout-topbar-button">
-                    <i className="pi pi-moon"></i>
-                    <span>Dark Mode</span>
-                </button> */}
                 <AppConfig />
-                <button type="button" className="p-link layout-topbar-button">
-                    <i className="pi pi-user"></i>
-                    <span>Profile</span>
-                </button>
+                <SignedIn>
+                    <UserButton afterSignOutUrl={process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_OUT_URL}/>
+                </SignedIn>
+                <SignedOut>
+                    <Link href="/sign-in">
+                        <button type="button" className="p-link layout-topbar-button">
+                            <i className="pi pi-sign-in"></i>
+                            <span>Sign In</span>
+                        </button>
+                    </Link>
+                </SignedOut>
                 <Link href="/">
                     <button type="button" className="p-link layout-topbar-button">
                         <i className="pi pi-cog"></i>

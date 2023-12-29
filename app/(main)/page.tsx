@@ -12,6 +12,8 @@ import { LayoutContext } from '../../layout/context/layoutcontext';
 import Link from 'next/link';
 import { Demo } from '../../types/types';
 import { ChartData, ChartOptions } from 'chart.js';
+import { Dropdown } from 'primereact/dropdown';
+import { Divider } from 'primereact/divider';
 
 const lineData: ChartData = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -141,10 +143,71 @@ const Feed = () => {
 
                 <div className="grid">
                     <div className="col-12 lg:col-8">
-                        hey
+                        <div className="card">
+                            <div className="flex align-items-center py-2 border-bottom-1 surface-border">
+                                <div className="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
+                                    <i className="pi pi-user text-xl text-blue-500" />
+                                </div>
+                                <span className="text-800 line-height-3 font-medium">
+                                    Richard Jones<br /><span className="text-600">29th Oct, 2023</span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
+
                     <div className="hidden lg:block lg:col-4">
                         <div className="ml-2">
+
+                            {/* drafts section */}
+
+                            <div className="card">
+                                <div className="flex flex-column">
+                                    <div className="flex align-items-center justify-content-between flex-wrap">
+                                        <h5 className="text-800">Drafts</h5>
+                                        <Button 
+                                        label="View all"
+                                        severity="info"
+                                        outlined
+                                        size="small"></Button>
+                                    </div>
+                                    <div className="mt-4">
+                                        <p className="text-800 font-medium">No Title</p>
+                                        <div className="flex justify-content-between text-600">
+                                            <p className="">Modified 22 Nov</p>
+                                            <p className="cursor-pointer">
+                                                <i className="pi pi-pencil mr-1 underline"></i>
+                                                Continue Editing
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* trending articles */}
+
+                            <div className="card">
+                                <div className="flex flex-column">
+                                    <div className="flex align-items-center justify-content-between flex-wrap">
+                                        <h5 className="text-800">Treding Articles</h5>
+                                        <Dropdown
+                                        placeholder="1 week"
+                                        />
+                                    </div>
+                                    <div className="mt-3">
+                                        <p className="font-medium cursor-pointer">
+                                            CodeArc's Feed Architecture
+                                        </p>
+                                        <div className="flex justify-content-between text-600">
+                                            <p className="">Florian Fuchs</p>
+                                            <p className="">
+                                                765 reads
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* bookmarks section */}
 
                             <div className="card">
                                 <div className="flex flex-column">
@@ -200,6 +263,19 @@ const Feed = () => {
                                                 </div>
                                             </TabPanel>
                                         </TabView>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* external links */}
+
+                            <div className="card">
+                                <div className="flex flex-column mb-2 border-bottom-1 surface-border">
+                                    <p className="font-medium">Connect with us</p>
+                                    <div className="flex justify-content-start flex-wrap gap-3">
+                                        <Button icon="pi pi-facebook" rounded outlined aria-label="Filter" />
+                                        <Button icon="pi pi-youtube" rounded outlined aria-label="Filter" />
+                                        <Button icon="pi pi-linkedin" rounded outlined aria-label="Filter" />
                                     </div>
                                 </div>
                             </div>
