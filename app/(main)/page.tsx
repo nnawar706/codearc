@@ -10,7 +10,7 @@ import Loader from './loader';
 
 const Feed = () => {
 
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(false)
 
     return loading ? <Loader/> : (
         <div className="grid">

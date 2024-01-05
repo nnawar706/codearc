@@ -5,8 +5,7 @@ const UserSchema = new Schema({
     email: { type: String, required: [true, "Email is required."], unique: [true, "This email address is taken."] },
     username: { type: String, required: true, unique: true},
     name: { type: String, required: true },
-    photoUrl: { type: String, required: true },
-    deletedAt: { type: Date }
+    photoUrl: { type: String, required: true }
 },{
     timestamps: true
 })
