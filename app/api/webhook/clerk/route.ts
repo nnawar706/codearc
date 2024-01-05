@@ -63,7 +63,7 @@ export async function POST(req: Request) {
         const user = {
             authId: id,
             email: email_addresses[0].email_address,
-            username: 'user' + generateUId,
+            username: 'user' + Math.floor(Math.random() * 9) + 100,
             name: first_name + ' ' + last_name,
             photoUrl: image_url
         }
