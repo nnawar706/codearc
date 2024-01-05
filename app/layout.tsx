@@ -1,6 +1,4 @@
 'use client';
-
-import type { Metadata } from 'next'
 import { LayoutProvider } from '../layout/context/layoutcontext';
 import { PrimeReactProvider } from 'primereact/api';
 import 'primereact/resources/primereact.css';
@@ -12,14 +10,6 @@ import { ClerkProvider } from '@clerk/nextjs';
 
 interface RootLayoutProps {
     children: React.ReactNode;
-}
-
-export const metadata: Metadata = {
-    title: 'CodeArc',
-    description: 'Blog',
-    icons: {
-        icon: ''
-    }
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
