@@ -1,5 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 'use client';
+
 import { Button } from 'primereact/button';
 import { TabView, TabPanel } from 'primereact/tabview';
 import Link from 'next/link';
@@ -18,8 +18,8 @@ const Feed = () => {
                 <div
                     className="px-4 py-5 shadow-2 flex flex-column md:flex-row md:align-items-center justify-content-between mb-3"
                     style={{
-                        borderRadius: '1rem',
-                        background: 'linear-gradient(0deg, rgba(0, 123, 255, 0.5), rgba(0, 123, 255, 0.5)), linear-gradient(92.54deg, #1C80CF 47.88%, #FFFFFF 100.01%)'
+                        borderRadius: "1rem",
+                        background: "linear-gradient(0deg, rgba(0, 123, 255, 0.5), rgba(0, 123, 255, 0.5)), linear-gradient(92.54deg, #1C80CF 47.88%, #FFFFFF 100.01%)"
                     }}
                 >
                     <div>
@@ -87,7 +87,7 @@ const Feed = () => {
                                     </div>
                                     <div className="mt-3">
                                         <p className="font-medium cursor-pointer">
-                                            CodeArc's Feed Architecture
+                                            CodeArc Feed Architecture
                                         </p>
                                         <div className="flex justify-content-between text-600">
                                             <p className="">Florian Fuchs</p>
@@ -124,7 +124,7 @@ const Feed = () => {
                                                         <div className="w-15rem h-4rem">
                                                             <div className="">    
                                                                 <span className="font-medium">#2Articles1Week</span>
-                                                                <p className="text-700">Become better at technical writing; accept CordeArc's writing challenge for four weeks</p>
+                                                                <p className="text-700">Become better at technical writing; accept CordeArc writing challenge for four weeks</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -135,7 +135,7 @@ const Feed = () => {
                                                         <div className="w-15rem h-4rem">
                                                             <div className="">    
                                                                 <span className="font-medium">#2Articles1Week</span>
-                                                                <p className="text-700">Become better at technical writing; accept CordeArc's writing challenge for four weeks</p>
+                                                                <p className="text-700">Become better at technical writing; accept CordeArc writing challenge for four weeks</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -148,7 +148,7 @@ const Feed = () => {
                                                         <div className="w-15rem h-4rem">
                                                             <div className="">    
                                                                 <span className="font-medium">#2Articles1Week</span>
-                                                                <p className="text-700">Become better at technical writing; accept CordeArc's writing challenge for four weeks</p>
+                                                                <p className="text-700">Become better at technical writing; accept CordeArc writing challenge for four weeks</p>
                                                             </div>
                                                         </div>
                                                     </div>
