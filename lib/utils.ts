@@ -1,7 +1,8 @@
 import qs from 'query-string'
+import { generateComponents } from "@uploadthing/react"
 
 import { UrlQueryParams, RemoveUrlQueryParams } from '../types/general'
-
+import type { OurFileRouter } from '../app/api/uploadthing/core'
 
 export const formatDateTime = (dateString: Date) => {
     const dateTimeOptions: Intl.DateTimeFormatOptions = {
@@ -79,3 +80,6 @@ export const handleError = (error: unknown) => {
     console.error(error)
     throw new Error(typeof error === 'string' ? error : JSON.stringify(error))
 }
+
+export const { UploadButton, UploadDropzone, Uploader } =
+    generateComponents<OurFileRouter>();

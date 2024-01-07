@@ -1,16 +1,17 @@
+"use client"
+
 import React from 'react';
+import { useAuth, useUser } from "@clerk/nextjs"
+
+import Draft from '../../../../demo/components/Draft';
 
 const NewBlog = () => {
+    const { user } = useUser()
+    const userId = user?.publicMetadata?.userId
+
     return (
-        <div className="grid">
-            <div className="col-12">
-                <div className="card">
-                    <h5>New Blog</h5>
-                    <p>Use this page to start from scratch and place your custom content.</p>
-                </div>
-            </div>
-        </div>
-    );
-};
+        <Draft authId={userId}/>
+    )
+}
 
 export default NewBlog;

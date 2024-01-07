@@ -2,10 +2,11 @@ import {Schema, models, model} from "mongoose";
 
 const BlogSchema = new Schema({
     user: { type: Schema.Types.ObjectId, ref: "User" },
-    title: { type: String, required: true },  
+    title: { type: String },  
     detail: { type: String },
     readers: { type: Number, default: 0 },
-    status: { type: Schema.Types.ObjectId, ref: "BlogStatus" }
+    status: { type: Schema.Types.ObjectId, ref: "BlogStatus", default: "659a7ea34d148227282d3fcb" },
+    photoUrl: { type: String }
 }, {
     timestamps: true,
 })
