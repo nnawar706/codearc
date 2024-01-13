@@ -90,15 +90,6 @@ const Draft = ({ id, authId }: {id?: string; authId: any}) => {
         // console.log(response)
     }
 
-    // setInterval(() => {
-    //     console.log('Hello')
-    // }, 10000)
-
-    // const { getRootProps, getInputProps } = useDropzone({
-    //     onDrop,
-    //     accept: 'image/*' ? generateClientDropzoneAccept(['image/*']) : undefined,
-    // })
-
     return (
         <div className="grid">
             <Toast ref={toast}></Toast>

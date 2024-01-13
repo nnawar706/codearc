@@ -8,32 +8,31 @@ export async function POST(request: NextRequest) {
 
         const response = await createBlog({
             userId: body.userId,
-            blog: {
-                title: body.title,
-                detail: body.detail,
-                photoUrl: body.photoUrl
-            }
+            title: body.title,
+            detail: body.detail,
+            photoUrl: body.photoUrl
         })
 
-        if (response?.status) {
+        if (response) {
             return NextResponse.json({ 
                 status: true,
                 message: "New article created.",
                 data: {
-                    blogId: response?.message
+                    blogId: response
                 }
             }, { status: 201 })
-        } else {
+        } 
+        else {
             return NextResponse.json({
                 status: false,
-                message: response?.message
+                message: 'An unexpected error occurred',
             }, { status: 400 })
         }
     } catch (err)
     {
         return NextResponse.json({
             status: false,
-            message: 'error'
-        }, { status: 400 })
+            message: err
+        }, { status: 500 })
     }
 }

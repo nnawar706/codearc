@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react';
-import { useAuth, useUser } from "@clerk/nextjs"
+import { useUser } from "@clerk/nextjs"
 
 import Draft from '../../../../demo/components/Draft';
 
