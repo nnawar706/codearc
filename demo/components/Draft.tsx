@@ -64,7 +64,7 @@ const Draft = ({ id, authId }: {id?: string; authId: any}) => {
                 callToast(toast, false, resData?.message);
             }
         } catch (error: any) {
-            callToast(toast, "warn", error?.message);
+            callToast(toast, "warn", error);
         } finally {
             setLoading(false)
         }
