@@ -10,7 +10,7 @@ import { Toast } from 'primereact/toast';
 import callToast from '../../lib/helper';
 import { useUploadThing } from '../../lib/uploadthing'
 
-const Draft = ({ id, authId }: {id?: string; authId: any}) => {
+const Draft = ({ id }: {id?: string}) => {
     const router = useRouter()
     const toast = useRef<Toast>(null)
     const coverImageRef = useRef<any>()
@@ -39,7 +39,6 @@ const Draft = ({ id, authId }: {id?: string; authId: any}) => {
             }
                     
             let payload: any = {
-                userId: authId,
                 title: title,
                 detail: detail,
                 photoUrl: imageUrl

@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
         const body: any = await request.json()
 
         const response = await createBlog({
-            userId: body.userId,
+            userId: '1732425456',
             title: body.title,
             detail: body.detail,
             photoUrl: body.photoUrl
