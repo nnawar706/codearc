@@ -9,7 +9,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ProductService } from '../../../demo/service/ProductService';
 import { LayoutContext } from '../../../layout/context/layoutcontext';
 import Link from 'next/link';
-import { Demo } from '../../../types/types';
+import { Demo } from '../../../types/demo';
 import { ChartData, ChartOptions } from 'chart.js';
 
 const lineData: ChartData = {
@@ -190,7 +190,7 @@ const Dashboard = () => {
             <div className="col-12 xl:col-6">
                 <div className="card">
                     <h5>Recent Sales</h5>
-                    <DataTable value={products} rows={5} paginator responsiveLayout="scroll">
+                    <DataTable value={products} rows={5} paginator>
                         <Column header="Image" body={(data) => <img className="shadow-2" src={`/demo/images/product/${data.image}`} alt={data.image} width="50" />} />
                         <Column field="name" header="Name" sortable style={{ width: '35%' }} />
                         <Column field="price" header="Price" sortable style={{ width: '35%' }} body={(data) => formatCurrency(data.price)} />

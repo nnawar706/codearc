@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import {SignedIn, SignedOut, UserButton} from "@clerk/nextjs";
 import { classNames } from 'primereact/utils';
 import React, { forwardRef, useContext, useImperativeHandle, useRef } from 'react';
 import { AppTopbarRef } from '../types/types';
@@ -25,11 +24,9 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
                 <span>SAKAI</span>
             </Link>
 
-            <SignedIn>
-                <button ref={menubuttonRef} type="button" className="p-link layout-menu-button layout-topbar-button" onClick={onMenuToggle}>
-                    <i className="pi pi-bars" />
-                </button>
-            </SignedIn>
+            <button ref={menubuttonRef} type="button" className="p-link layout-menu-button layout-topbar-button" onClick={onMenuToggle}>
+                <i className="pi pi-bars" />
+            </button>
 
             <button ref={topbarmenubuttonRef} type="button" className="p-link layout-topbar-menu-button layout-topbar-button" onClick={showProfileSidebar}>
                 <i className="pi pi-ellipsis-v" />
@@ -37,25 +34,12 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
 
             <div ref={topbarmenuRef} className={classNames('layout-topbar-menu', { 'layout-topbar-menu-mobile-active': layoutState.profileSidebarVisible })}>
                 <AppConfig />
-                <SignedIn>
-                    <button className="p-link layout-topbar-button">
-                        <UserButton afterSignOutUrl={process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_OUT_URL}/>
-                    </button>
-                </SignedIn>
-                <SignedOut>
-                    <Link href="/sign-in">
-                        <button type="button" className="p-link layout-topbar-button">
-                            <i className="pi pi-sign-in"></i>
-                            <span>Sign In</span>
-                        </button>
-                    </Link>
-                </SignedOut>
-                {/* <Link href="/">
+                <Link href="/">
                     <button type="button" className="p-link layout-topbar-button">
                         <i className="pi pi-cog"></i>
                         <span>Settings</span>
                     </button>
-                </Link> */}
+                </Link>
             </div>
         </div>
     );
