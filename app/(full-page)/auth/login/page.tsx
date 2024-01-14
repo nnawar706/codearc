@@ -1,21 +1,64 @@
 'use client';
 
 import {useRouter} from 'next/navigation';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import {Button} from 'primereact/button';
 import {Password} from 'primereact/password';
 import {LayoutContext} from '../../../../layout/context/layoutcontext';
 import {classNames} from 'primereact/utils';
+import callToast from '../../../../lib/helper';
+import { Toast } from 'primereact/toast';
+import { handleError } from '../../../../lib/utils';
+import { InputText } from 'primereact/inputtext';
 
 const LoginPage = () => {
     const [password, setPassword] = useState('');
-    const { layoutConfig } = useContext(LayoutContext);
-
-    const router = useRouter();
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const { layoutConfig, token, setToken } = useContext(LayoutContext);
+    const { push } = useRouter();
+    const toast = useRef<Toast | null>(null);
     const containerClassName = classNames('surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden', { 'p-input-filled': layoutConfig.inputStyle === 'filled' });
 
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+
+        setLoading(true);
+
+        try {
+            const payload = {
+                secret_code: password
+            }
+
+            const res = await fetch(`/api/auth/login`, {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+
+            const resData = await res.json();
+
+            if (res.ok)
+            {
+                callToast(toast, true, resData?.message);
+                setToken(resData?.access_token)
+                localStorage.setItem('isLoggedIn', "1")
+                push('/')
+            } else {
+                callToast(toast, false, resData?.message)
+            }
+        } catch (error) {
+            handleError(error)
+        } finally {
+            setLoading(false)
+        }
+    }
+    
     return (
         <div className={containerClassName}>
+            <Toast ref={toast} />
             <div className="flex flex-column align-items-center justify-content-center">
                 <img src={`/layout/images/logo-${layoutConfig.colorScheme === 'light' ? 'dark' : 'white'}.svg`} alt="Sakai logo" className="mb-5 w-6rem flex-shrink-0" />
                 <div
@@ -33,13 +76,29 @@ const LoginPage = () => {
                         </div>
 
                         <div>
-                            <Password inputId="password1" value={password} onChange={(e) => setPassword(e.target.value)}
-                                      placeholder="Secret Code" className="w-full mb-5" inputClassName="w-full p-3 md:w-30rem"></Password>
+                            <span className="p-input-icon-left p-input-icon-right w-full mb-4">
+                                <i className="pi pi-lock"></i>
+                                <InputText
+                                    id="password"
+                                    type={showPassword ? "text" : "password"}
+                                    className="w-full md:w-25rem"
+                                    placeholder="Secret Code"
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                                <i
+                                    className={`pi ${showPassword ? "pi-eye" : "pi-eye-slash"}`}
+                                    onClick={() => setShowPassword(!showPassword)}
+                                ></i>
+                            </span>
 
                             <div className="flex align-items-center justify-content-between mb-3">
 
                             </div>
-                            <Button label="Sign In" className="w-full p-3 text-xl" onClick={() => router.push('/')}></Button>
+                            <Button 
+                            label="Sign In" 
+                            className="w-full p-3 text-xl" 
+                            onClick={handleSubmit}
+                            disabled={loading}></Button>
                         </div>
                     </div>
                 </div>

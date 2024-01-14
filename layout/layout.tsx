@@ -13,11 +13,13 @@ import AppTopbar from "./AppTopbar";
 import { LayoutContext } from "./context/layoutcontext";
 import { PrimeReactContext } from "primereact/api";
 import { ChildContainerProps, LayoutState, AppTopbarRef } from "../types/types";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { handleError } from "../lib/utils";
 
 
 const Layout = ({ children }: ChildContainerProps) => {
-  const { layoutConfig, layoutState, setLayoutState } = useContext(LayoutContext);
+  const { push } = useRouter()
+  const { layoutConfig, layoutState, setLayoutState, token, setToken } = useContext(LayoutContext);
   const { setRipple } = useContext(PrimeReactContext);
   const topbarRef = useRef<AppTopbarRef>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
@@ -40,11 +42,55 @@ const Layout = ({ children }: ChildContainerProps) => {
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
   useEffect(() => {
     hideMenu();
     hideProfileMenu();
   }, [pathname, searchParams]);
 
+  useEffect(() => {
+    const isLoggedIn: string | null = localStorage.getItem("isLoggedIn")
+
+    const handleRefresh = async () => {
+      let newToken = ""
+
+      try {
+        const res = await fetch(`/api/auth/refresh`, {
+          method: "GET"
+        })
+
+        const resData = await res.json()
+
+        if (res.ok)
+        {
+          newToken = resData?.access_token
+          setToken(resData?.access_token)
+        } else {
+          push('/auth/login')
+        }
+      } catch (error) {
+        handleError(error)
+      } finally {
+        if (!newToken) {
+          push('/auth/login')
+          localStorage.setItem("isLoggedIn", "0")
+        }
+      }
+    }
+
+    if (!token && (!isLoggedIn || +isLoggedIn === 1))
+    {
+      handleRefresh().then()
+    }
+
+    // @ts-ignore
+    if (+isLoggedIn === 0) {
+      push(`/auth/login`)
+    }
+    const interval = setInterval(handleRefresh, 14*60*1000)
+    return () => clearInterval(interval)
+  }, [token])
+  
   const [
     bindProfileMenuOutsideClickListener,
     unbindProfileMenuOutsideClickListener,

@@ -21,7 +21,7 @@ export async function POST(request: Request) {
 
     const secret = process.env.JWT_SECRET || "";
     const cookie = process.env.COOKIE_NAME || "";
-    const max_age = 60 * 60 * 24 * 30;
+    const max_age = 60 * 60 * 24 * 7;
 
     const token = sign(
         {
@@ -44,8 +44,9 @@ export async function POST(request: Request) {
     return NextResponse.json({
         status: true,
         message: "Welcome aboard, Nafisa!",
+        access_token: token
     }, {
         status: 200,
-        headers: { "Set-Cookie": serialized },
+        headers: { "Set-Cookie": serialized }
     });
 }

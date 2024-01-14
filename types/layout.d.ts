@@ -45,6 +45,8 @@ export interface LayoutContextProps {
     setLayoutState: Dispatch<SetStateAction<LayoutState>>;
     onMenuToggle: () => void;
     showProfileSidebar: () => void;
+    token: string;
+    setToken: any;
 }
 
 export interface MenuContextProps {
