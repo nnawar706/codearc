@@ -5,7 +5,7 @@ import { LayoutContext } from './context/layoutcontext';
 import AppConfig from './AppConfig';
 import { classNames } from 'primereact/utils';
 
-const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
+const AppTopbarPublic = forwardRef<AppTopbarRef>((props, ref) => {
     const { layoutConfig, layoutState, onMenuToggle, showProfileSidebar } = useContext(LayoutContext);
     const menubuttonRef = useRef(null);
     const topbarmenuRef = useRef(null);
@@ -22,10 +22,6 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
             <Link href="/" className="layout-topbar-logo">
                 <img src={`/layout/images/logo-${layoutConfig.colorScheme !== 'light' ? 'white' : 'dark'}.svg`} height={'45px'} alt="logo" />
             </Link>
-
-            <button ref={menubuttonRef} type="button" className="p-link layout-menu-button layout-topbar-button" onClick={onMenuToggle}>
-                <i className="pi pi-bars" />
-            </button>
 
             <button ref={topbarmenubuttonRef} type="button" className="p-link layout-topbar-menu-button layout-topbar-button" onClick={showProfileSidebar}>
                 <i className="pi pi-ellipsis-v" />
@@ -44,6 +40,6 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
     );
 });
 
-AppTopbar.displayName = 'AppTopbar';
+AppTopbarPublic.displayName = 'AppTopbar';
 
-export default AppTopbar;
+export default AppTopbarPublic;
