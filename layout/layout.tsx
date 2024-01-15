@@ -66,13 +66,13 @@ const Layout = ({ children }: ChildContainerProps) => {
           newToken = resData?.access_token
           setToken(resData?.access_token)
         } else {
-          push('/auth/login')
+          push('/auth/access')
         }
       } catch (error) {
         handleError(error)
       } finally {
         if (!newToken) {
-          push('/auth/login')
+          push('/auth/access')
           localStorage.setItem("isLoggedIn", "0")
         }
       }
@@ -85,7 +85,7 @@ const Layout = ({ children }: ChildContainerProps) => {
 
     // @ts-ignore
     if (+isLoggedIn === 0) {
-      push(`/auth/login`)
+      push(`/auth/access`)
     }
     const interval = setInterval(handleRefresh, 14*60*1000)
     return () => clearInterval(interval)

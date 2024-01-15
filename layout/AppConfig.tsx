@@ -4,6 +4,7 @@ import { PrimeReactContext } from 'primereact/api';
 import React, { useContext, useEffect } from 'react';
 import { AppConfigProps, LayoutConfig } from '../types/types';
 import { LayoutContext } from './context/layoutcontext';
+import { Button } from 'primereact/button';
 
 const AppConfig = (props: AppConfigProps) => {
     const { layoutConfig, setLayoutConfig } = useContext(LayoutContext);

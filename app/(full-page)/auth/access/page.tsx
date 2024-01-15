@@ -1,16 +1,18 @@
-/* eslint-disable @next/next/no-img-element */
 'use client';
+
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button } from 'primereact/button';
+import { LayoutContext } from '../../../../layout/context/layoutcontext';
 
 const AccessDeniedPage = () => {
     const router = useRouter();
+    const { layoutConfig } = useContext(LayoutContext);
 
     return (
         <div className="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
             <div className="flex flex-column align-items-center justify-content-center">
-                <img src="/demo/images/access/logo-orange.svg" alt="Sakai logo" className="mb-5 w-6rem flex-shrink-0" />
+                <img src={`/layout/images/logo-${layoutConfig.colorScheme === 'light' ? 'dark' : 'white'}.svg`} alt="logo" className="mb-5 w-6rem flex-shrink-0" />
                 <div
                     style={{
                         borderRadius: '56px',
@@ -24,8 +26,8 @@ const AccessDeniedPage = () => {
                         </div>
                         <h1 className="text-900 font-bold text-5xl mb-2">Access Denied</h1>
                         <div className="text-600 mb-5">Sorry, you do not have the necessary permissions.</div>
-                        <img src="/demo/images/access/asset-access.svg" alt="Error" className="mb-5" width="80%" />
                         <Button icon="pi pi-arrow-left" label="Go Back" text onClick={() => router.push('/')} />
+                        <Button label="Login" text onClick={() => router.push('/auth/login')} />
                     </div>
                 </div>
             </div>
