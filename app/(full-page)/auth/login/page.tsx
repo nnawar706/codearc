@@ -3,19 +3,18 @@
 import {useRouter} from 'next/navigation';
 import React, {useContext, useRef, useState} from 'react';
 import {Button} from 'primereact/button';
-import {Password} from 'primereact/password';
 import {LayoutContext} from '../../../../layout/context/layoutcontext';
 import {classNames} from 'primereact/utils';
 import callToast from '../../../../lib/helper';
-import { Toast } from 'primereact/toast';
-import { handleError } from '../../../../lib/utils';
-import { InputText } from 'primereact/inputtext';
+import {Toast} from 'primereact/toast';
+import {handleError} from '../../../../lib/utils';
+import {InputText} from 'primereact/inputtext';
 
 const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
-    const { layoutConfig, token, setToken } = useContext(LayoutContext);
+    const { layoutConfig, setToken } = useContext(LayoutContext);
     const { push } = useRouter();
     const toast = useRef<Toast | null>(null);
     const containerClassName = classNames('surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden', { 'p-input-filled': layoutConfig.inputStyle === 'filled' });
@@ -45,7 +44,7 @@ const LoginPage = () => {
                 callToast(toast, true, resData?.message);
                 setToken(resData?.access_token)
                 localStorage.setItem('isLoggedIn', "1")
-                push('/')
+                push('/dashboard')
             } else {
                 callToast(toast, false, resData?.message)
             }

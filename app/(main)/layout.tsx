@@ -6,15 +6,15 @@ interface AppLayoutProps {
 }
 
 export const metadata: Metadata = {
-    title: 'PrimeReact Sakai',
-    description: 'The ultimate collection of design-agnostic, flexible and accessible React UI Components.',
+    title: 'CodeArc',
+    description: 'Explore insightful articles, tutorials, and personal reflections on the ever-evolving landscape of software development at CodeArc.',
     robots: { index: false, follow: false },
     viewport: { initialScale: 1, width: 'device-width' },
     openGraph: {
         type: 'website',
-        title: 'PrimeReact SAKAI-REACT',
-        url: 'https://sakai.primereact.org/',
-        description: 'The ultimate collection of design-agnostic, flexible and accessible React UI Components.',
+        title: 'CodeArc',
+        url: 'https://codearc.vercel.app/',
+        description: 'Explore insightful articles, tutorials, and personal reflections on the ever-evolving landscape of software development at CodeArc.',
         images: ['https://www.primefaces.org/static/social/sakai-react.png'],
         ttl: 604800
     },
