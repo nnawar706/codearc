@@ -18,7 +18,7 @@ const LoginPage = () => {
     const { layoutConfig, setToken } = useContext(LayoutContext);
     const { push } = useRouter();
     const toast = useRef<Toast | null>(null);
-    const containerClassName = classNames('surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden', { 'p-input-filled': layoutConfig.inputStyle === 'filled' });
+    const containerClassName = classNames('flex align-items-center justify-content-center overflow-hidden', { 'p-input-filled': layoutConfig.inputStyle === 'filled' });
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
@@ -64,7 +64,7 @@ const LoginPage = () => {
     return (
         <div className={containerClassName}>
             <Toast ref={toast} />
-            <div className="flex flex-column align-items-center justify-content-center">
+            <div className="flex flex-column align-items-center justify-content-center mt-8">
                 <img src={`/layout/images/logo-${layoutConfig.colorScheme === 'light' ? 'dark' : 'white'}.svg`} 
                 alt="logo" className="mb-5 w-6rem flex-shrink-0" />
                 <div

@@ -4,8 +4,9 @@ import { PrimeReactContext } from 'primereact/api';
 import React, { useContext, useEffect } from 'react';
 import { AppConfigProps, LayoutConfig } from '../types/types';
 import { LayoutContext } from './context/layoutcontext';
+import { Button } from 'primereact/button';
 
-const AppConfig = (props: AppConfigProps) => {
+const AppConfigPublic = (props: AppConfigProps) => {
     const { layoutConfig, setLayoutConfig } = useContext(LayoutContext);
     const { changeTheme } = useContext(PrimeReactContext);
 
@@ -25,19 +26,19 @@ const AppConfig = (props: AppConfigProps) => {
     }, [layoutConfig.scale]);
 
     return (
-        <>
-            <button className="p-link layout-topbar-button" type="button" 
-                onClick={(e) => {
-                    let newTheme        = layoutConfig.theme == 'lara-light-blue' ? 'lara-dark-blue' : 'lara-light-blue' 
-                    let newColorScheme  = layoutConfig.colorScheme == 'light' ? 'dark' : 'light'
-
-                    _changeTheme(newTheme, newColorScheme)
-                }}>
-                <i className={layoutConfig.theme == 'lara-light-blue' ? 'pi pi-moon' : 'pi pi-sun'}></i>
-                <span>{layoutConfig.theme == 'lara-light-blue' ? 'Dark' : 'Light'} Mode</span>
-            </button>
-        </>
+    <div className="flex justify-content-end mr-3 mt-3">
+        <Button
+            icon={layoutConfig.theme == 'lara-light-blue' ? "pi pi-moon" : "pi pi-sun"}
+            rounded
+            aria-label="Filter"
+            onClick={(e) => {
+                let newTheme        = layoutConfig.theme == 'lara-light-blue' ? 'lara-dark-blue' : 'lara-light-blue'
+                let newColorScheme  = layoutConfig.colorScheme == 'light' ? 'dark' : 'light'
+                _changeTheme(newTheme, newColorScheme)
+            }}>
+        </Button>
+    </div>
     );
 };
 
-export default AppConfig;
+export default AppConfigPublic;
