@@ -5,12 +5,51 @@ import { TabView, TabPanel } from 'primereact/tabview';
 import Link from 'next/link';
 import { Dropdown } from 'primereact/dropdown';
 import { useState } from 'react';
+import { Avatar } from 'primereact/avatar';
+
 
 import Loader from './loader';
+import { useFetch } from '../../demo/hooks/useFetch';
+import BlogCard from '../../demo/components/BlogCard';
+import { DataView } from 'primereact/dataview';
+
 
 const Feed = () => {
 
-    const [loading, setLoading] = useState<boolean>(false)
+    const { data, loading, totalData } = useFetch('/api/blogs/get_all')
+
+    console.log(data, totalData)
+
+    const itemTemplate = (blog: any) => {
+        return (
+            <div className="col-12">
+                <div className="p-3">
+                    <div className="card">
+                        <div className="flex align-items-center py-2 border-bottom-1 surface-border">
+                            <div className="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
+                                <Avatar image="/demo/images/login/avatar.png" size="large" shape="circle"/>
+                            </div>
+                            <span className="text-800 line-height-3 font-medium">
+                                Nafisa Nawer<br /><span className="text-600 font-normal">29th Oct, 2023</span>
+                            </span>
+                        </div>
+                        <div className="flex align-items-center flex-column justify-content-center py-2 z-index border-rounded">
+                            <div>
+                                <img 
+                                src={blog.photoUrl} 
+                                alt={blog.title.split(" ", 1).join("-")}
+                                className="w-full"/>
+                            </div>
+                            <div className="mt-2">
+                                <h5 className="text-800">{blog.title}</h5>
+                                {/* <p>{blog.subtitle}</p> */}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
     return loading ? <Loader/> : (
         <div className="grid">
@@ -36,14 +75,14 @@ const Feed = () => {
                 <div className="grid">
                     <div className="col-12 lg:col-8">
                         <div className="card">
-                            <div className="flex align-items-center py-2 border-bottom-1 surface-border">
-                                <div className="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
-                                    <i className="pi pi-user text-xl text-blue-500" />
-                                </div>
-                                <span className="text-800 line-height-3 font-medium">
-                                    Richard Jones<br /><span className="text-600">29th Oct, 2023</span>
-                                </span>
-                            </div>
+                            <DataView
+                            className="w-full"
+                            value={data}
+                            paginator
+                            rows={1}
+                            layout="grid"
+                            itemTemplate={itemTemplate}
+                            ></DataView>
                         </div>
                     </div>
 

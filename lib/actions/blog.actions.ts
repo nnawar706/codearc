@@ -2,10 +2,53 @@
 
 import { connectToDatabase } from "../database/db"
 import Blog from '../database/models/blog.model'
-import { CreateBlog } from '../../types/blog'
+import { CreateBlog, getBlogsParams } from '../../types/blog'
 import Tag from "../database/models/tag.model"
 import { ITag } from "../../types/models"
 import BlogTag from "../database/models/blog-tag.model"
+import BlogStatus from "../database/models/blog-status.model"
+import User from "../database/models/user.model"
+
+const getStatusById = async (id: string) => {
+    return BlogStatus.findById(id)
+}
+
+const populateBlogs = (query: any) => {
+    return query
+        .populate({ path: "status", model: BlogStatus, select: '_id, name' })
+        .populate({ path: "user", model: User, select: '_id, name, email, photoUrl'})
+}
+
+export async function getAll({ query, limit = 6, page, status, tag }: getBlogsParams) {
+    try {
+        await connectToDatabase()
+
+        const titleParam = query ? { title: {$regex: query, $options: 'i'} } : {}
+        
+        const statusParam = status ? await getStatusById(status) : null
+
+        const queryParams = {
+            $and: [titleParam, statusParam ? { status: statusParam._id } : {}]
+        }
+
+        const skipAmount = (Number(page) - 1) * limit
+        const blogsQuery = Blog.find(queryParams)
+                            .sort({ createdAt: 'desc' })
+                            .skip(skipAmount)
+                            .limit(limit)
+
+        const data = await populateBlogs(blogsQuery)
+        const count = await Blog.countDocuments(queryParams)
+        
+        return {
+            data: JSON.parse(JSON.stringify(data)),
+            totalPages: Math.ceil(count / limit),
+            totalData: count
+        }
+    } catch (err) {
+        return err
+    }
+}
 
 export const createBlog = async ({ title, subtitle, detail, photoUrl, tags }: CreateBlog) => {
     try {
