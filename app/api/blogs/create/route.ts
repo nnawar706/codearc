@@ -1,16 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { verify } from "jsonwebtoken";
+import { cookies } from "next/headers";
+
 import { createBlog } from '../../../../lib/actions/blog.actions'
 
 export async function POST(request: NextRequest) {
     try
     {
+        const cookie_name = process.env.COOKIE_NAME || ""
+        const cookieStore = cookies()
+
+        const token = cookieStore.get(cookie_name)
+
+        if (!token) {
+            return NextResponse.json({ 
+                status: false,
+                message: 'protected content'
+            }, { status: 401 })
+        }
+
         const body: any = await request.json()
 
         const response = await createBlog({
-            userId: '1732425456',
             title: body.title,
+            subtitle: body.subtitle,
             detail: body.detail,
-            photoUrl: body.photoUrl
+            photoUrl: body.photoUrl,
+            tags: body.tags
         })
 
         if (response) {
