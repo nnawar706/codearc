@@ -4,10 +4,7 @@ import { connectToDatabase } from "../database/db"
 import Blog from '../database/models/blog.model'
 import { CreateBlog, getBlogsParams } from '../../types/blog'
 import Tag from "../database/models/tag.model"
-import { ITag } from "../../types/models"
-import BlogTag from "../database/models/blog-tag.model"
 import BlogStatus from "../database/models/blog-status.model"
-import User from "../database/models/user.model"
 
 const getStatusById = async (id: string) => {
     return BlogStatus.findById(id)
@@ -16,14 +13,14 @@ const getStatusById = async (id: string) => {
 const populateBlogs = (query: any) => {
     return query
         .populate({ path: "status", model: BlogStatus, select: '_id, name' })
-        .populate({ path: "user", model: User, select: '_id, name, email, photoUrl'})
+        .populate({ path: "tags", model: Tag, select: '_id, name'})
 }
 
-export async function getAll({ query, limit = 6, page, status, tag }: getBlogsParams) {
+export async function getAll({ title, limit = 6, page, status, tag }: getBlogsParams) {
     try {
         await connectToDatabase()
 
-        const titleParam = query ? { title: {$regex: query, $options: 'i'} } : {}
+        const titleParam = title ? { title: {$regex: title, $options: 'i'} } : {}
         
         const statusParam = status ? await getStatusById(status) : null
 
@@ -32,6 +29,7 @@ export async function getAll({ query, limit = 6, page, status, tag }: getBlogsPa
         }
 
         const skipAmount = (Number(page) - 1) * limit
+
         const blogsQuery = Blog.find(queryParams)
                             .sort({ createdAt: 'desc' })
                             .skip(skipAmount)
@@ -45,8 +43,8 @@ export async function getAll({ query, limit = 6, page, status, tag }: getBlogsPa
             totalPages: Math.ceil(count / limit),
             totalData: count
         }
-    } catch (err) {
-        return err
+    } catch (err: any) {
+        return err.message
     }
 }
 
@@ -60,27 +58,9 @@ export const createBlog = async ({ title, subtitle, detail, photoUrl, tags }: Cr
             subtitle: subtitle,
             detail: detail,
             photoUrl: photoUrl,
-            status: "659a7ea34d148227282d3fcb"
+            status: "659a7ea34d148227282d3fcb",
+            tags: tags.map((tag) => tag)
         })
-
-        const existingTags = await Tag.find({ name: {$in: tags} })
-
-        const newTags = tags.filter((tag: string) => !existingTags.some((t) => t.name === tag))
-        .map((tag: string) => ({ name: tag }))
-
-        if (newTags.length > 0) {
-            const createdTags = await Tag.insertMany(newTags)
-            existingTags.push(...createdTags)
-        }
-
-        await Promise.all(
-            existingTags.map(async (tag: ITag) => {
-                await BlogTag.create({
-                    blog: newBlog._id,
-                    tag: tag._id,
-                });
-            })
-        );
 
         return newBlog._id
     } catch (err) {

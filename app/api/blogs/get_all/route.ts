@@ -1,30 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { verify } from "jsonwebtoken";
-import { cookies } from "next/headers";
 
-import { createBlog, getAll } from '../../../../lib/actions/blog.actions'
+import { getAll } from '../../../../lib/actions/blog.actions'
+import { getBlogsParams } from '../../../../types/blog'
 
 export async function GET(request: NextRequest) {
     try
     {
-        const cookie_name = process.env.COOKIE_NAME || ""
-        const cookieStore = cookies()
+        const { title, page, status, tag } = Object.fromEntries(request.nextUrl.searchParams)
 
-        const token = cookieStore.get(cookie_name)
-
-        if (!token) {
-            return NextResponse.json({ 
-                status: false,
-                message: 'protected content'
-            }, { status: 401 })
-        }
-
-        let query = {
-            query: null, 
+        let query: getBlogsParams = {
+            title: title, 
             limit: 6, 
-            page: 1, 
-            status: null, 
-            tag: null
+            page: parseInt(page), 
+            status: status || null,
+            tag: tag || null
         }
 
         const data: any = await getAll(query)
@@ -35,11 +24,11 @@ export async function GET(request: NextRequest) {
             data: data.data,
             totalData: data.totalData
         }, { status: 200 })
-    } catch (err)
+    } catch (err: any)
     {
         return NextResponse.json({
             status: false,
-            message: err
+            message: err.message
         }, { status: 500 })
     }
 }

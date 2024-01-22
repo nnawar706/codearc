@@ -10,15 +10,16 @@ import { Avatar } from 'primereact/avatar';
 
 import Loader from './loader';
 import { useFetch } from '../../demo/hooks/useFetch';
-import BlogCard from '../../demo/components/BlogCard';
 import { DataView } from 'primereact/dataview';
+import { Chip } from 'primereact/chip';
+import { ITag } from '../../types/models';
+import { useRouter } from 'next/navigation';
 
 
 const Feed = () => {
+    const { push } = useRouter()
 
-    const { data, loading, totalData } = useFetch('/api/blogs/get_all')
-
-    console.log(data, totalData)
+    const { data, loading, totalData } = useFetch('/api/blogs/get_all?page=1')
 
     const itemTemplate = (blog: any) => {
         return (
@@ -33,16 +34,25 @@ const Feed = () => {
                                 Nafisa Nawer<br /><span className="text-600 font-normal">29th Oct, 2023</span>
                             </span>
                         </div>
-                        <div className="flex align-items-center flex-column justify-content-center py-2 z-index border-rounded">
+                        <div className="flex flex-column justify-content-center py-2 z-index border-rounded">
                             <div>
                                 <img 
                                 src={blog.photoUrl} 
                                 alt={blog.title.split(" ", 1).join("-")}
-                                className="w-full"/>
+                                className="w-full border-round"/>
                             </div>
                             <div className="mt-2">
-                                <h5 className="text-800">{blog.title}</h5>
-                                {/* <p>{blog.subtitle}</p> */}
+                                <h5 className="text-800 cursor-pointer hover:underline"
+                                onClick={() => push(`/blog/${blog._id}`)}>{blog.title}</h5>
+                                <h6>{blog.subtitle}</h6>
+                                <div className="flex gap-2">
+                                    {blog.tags.map((tag: ITag, index: number) => {
+                                    return <Chip key={index} label={tag.name}/>
+                                })}
+                                </div>
+                                <p className="mt-2">
+                                    {`${blog.detail.substring(0, 150)}...`}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -76,7 +86,9 @@ const Feed = () => {
                     <div className="col-12 lg:col-8">
                         <div className="card">
                             <DataView
+                            dataKey='id'
                             className="w-full"
+                            emptyMessage='No article found'
                             value={data}
                             paginator
                             rows={1}

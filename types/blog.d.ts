@@ -11,7 +11,7 @@ export interface CreateBlog extends Blog {
 }
 
 export interface getBlogsParams {
-    query: null | string;
+    title: null | string;
     tag: null | string;
     status: null | string;
     limit: number;
