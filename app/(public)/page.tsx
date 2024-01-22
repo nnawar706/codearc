@@ -14,6 +14,7 @@ import { DataView } from 'primereact/dataview';
 import { Chip } from 'primereact/chip';
 import { ITag } from '../../types/models';
 import { useRouter } from 'next/navigation';
+import { getBlog } from '../../types/blog';
 
 
 const Feed = () => {
@@ -21,7 +22,7 @@ const Feed = () => {
 
     const { data, loading, totalData } = useFetch('/api/blogs/get_all?page=1')
 
-    const itemTemplate = (blog: any) => {
+    const itemTemplate = (blog: getBlog) => {
         return (
             <div className="col-12">
                 <div className="p-3">
@@ -43,7 +44,7 @@ const Feed = () => {
                             </div>
                             <div className="mt-2">
                                 <h5 className="text-800 cursor-pointer hover:underline"
-                                onClick={() => push(`/blog/${blog._id}`)}>{blog.title}</h5>
+                                onClick={() => push(`/article/${blog._id}`)}>{blog.title}</h5>
                                 <h6>{blog.subtitle}</h6>
                                 <div className="flex gap-2">
                                     {blog.tags.map((tag: ITag, index: number) => {
@@ -51,8 +52,14 @@ const Feed = () => {
                                 })}
                                 </div>
                                 <p className="mt-2">
-                                    {`${blog.detail.substring(0, 150)}...`}
+                                    {`${blog.detail.substring(0, 140)}...`}
                                 </p>
+                                <div className="flex flex-row gap-2">
+                                    <div className="flex align-items-center">
+                                        <i className="pi pi-eye mr-1"></i>
+                                        {blog.readers}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

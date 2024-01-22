@@ -48,6 +48,20 @@ export async function getAll({ title, limit = 6, page, status, tag }: getBlogsPa
     }
 }
 
+export async function getOne(id: string) {
+    try {
+        await connectToDatabase()
+
+        const blog = Blog.findById(id)
+
+        const data = await populateBlogs(blog)
+
+        return data
+    } catch (error) {
+        return null
+    }
+}
+
 export const createBlog = async ({ title, subtitle, detail, photoUrl, tags }: CreateBlog) => {
     try {
         await connectToDatabase()
