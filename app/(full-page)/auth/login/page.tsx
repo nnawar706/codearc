@@ -9,6 +9,7 @@ import callToast from '../../../../lib/helper';
 import {Toast} from 'primereact/toast';
 import {handleError} from '../../../../lib/utils';
 import {InputText} from 'primereact/inputtext';
+import { Avatar } from 'primereact/avatar';
 
 const LoginPage = () => {
     const [password, setPassword] = useState('');
@@ -17,10 +18,15 @@ const LoginPage = () => {
     const { layoutConfig, setToken } = useContext(LayoutContext);
     const { push } = useRouter();
     const toast = useRef<Toast | null>(null);
-    const containerClassName = classNames('surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden', { 'p-input-filled': layoutConfig.inputStyle === 'filled' });
+    const containerClassName = classNames('flex align-items-center justify-content-center overflow-hidden', { 'p-input-filled': layoutConfig.inputStyle === 'filled' });
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
+
+        if (password == '') {
+            callToast(toast, false, 'Secret code is required.')
+            return
+        }
 
         setLoading(true);
 
@@ -58,8 +64,9 @@ const LoginPage = () => {
     return (
         <div className={containerClassName}>
             <Toast ref={toast} />
-            <div className="flex flex-column align-items-center justify-content-center">
-                <img src={`/layout/images/logo-${layoutConfig.colorScheme === 'light' ? 'dark' : 'white'}.svg`} alt="Sakai logo" className="mb-5 w-6rem flex-shrink-0" />
+            <div className="flex flex-column align-items-center justify-content-center mt-8">
+                <img src={`/layout/images/logo-${layoutConfig.colorScheme === 'light' ? 'dark' : 'white'}.svg`} 
+                alt="logo" className="mb-5 w-6rem flex-shrink-0" />
                 <div
                     style={{
                         borderRadius: '56px',
@@ -69,7 +76,8 @@ const LoginPage = () => {
                 >
                     <div className="w-full surface-card py-8 px-5 sm:px-8" style={{ borderRadius: '53px' }}>
                         <div className="text-center mb-5">
-                            <img src="/demo/images/login/avatar.png" alt="Image" height="50" className="mb-3" />
+                            <Avatar className="p-overlay-badge mb-3"
+                            image="/demo/images/login/avatar.png" size="xlarge" shape="circle"/>
                             <div className="text-900 text-3xl font-medium mb-3">Welcome, Nafisa!</div>
                             <span className="text-600 font-medium">Enter your secret code to proceed.</span>
                         </div>

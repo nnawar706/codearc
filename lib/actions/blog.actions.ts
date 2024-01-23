@@ -1,22 +1,79 @@
 'use server'
 
-import { NextResponse } from 'next/server'
-
-import { handleError } from "../utils"
 import { connectToDatabase } from "../database/db"
 import Blog from '../database/models/blog.model'
-import { CreateBlog } from '../../types/blog'
+import { CreateBlog, getBlogsParams } from '../../types/blog'
+import Tag from "../database/models/tag.model"
+import BlogStatus from "../database/models/blog-status.model"
 
-export const createBlog = async ({ userId, title, detail, photoUrl }: CreateBlog) => {
+const getStatusById = async (id: string) => {
+    return BlogStatus.findById(id)
+}
+
+const populateBlogs = (query: any) => {
+    return query
+        .populate({ path: "status", model: BlogStatus, select: '_id, name' })
+        .populate({ path: "tags", model: Tag, select: '_id, name'})
+}
+
+export async function getAll({ title, limit = 6, page, status, tag }: getBlogsParams) {
+    try {
+        await connectToDatabase()
+
+        const titleParam = title ? { title: {$regex: title, $options: 'i'} } : {}
+        
+        const statusParam = status ? await getStatusById(status) : null
+
+        const queryParams = {
+            $and: [titleParam, statusParam ? { status: statusParam._id } : {}]
+        }
+
+        const skipAmount = (Number(page) - 1) * limit
+
+        const blogsQuery = Blog.find(queryParams)
+                            .sort({ createdAt: 'desc' })
+                            .skip(skipAmount)
+                            .limit(limit)
+
+        const data = await populateBlogs(blogsQuery)
+        const count = await Blog.countDocuments(queryParams)
+        
+        return {
+            data: JSON.parse(JSON.stringify(data)),
+            totalPages: Math.ceil(count / limit),
+            totalData: count
+        }
+    } catch (err: any) {
+        return err.message
+    }
+}
+
+export async function getOne(id: string) {
+    try {
+        await connectToDatabase()
+
+        const blog = Blog.findById(id)
+
+        const data = await populateBlogs(blog)
+
+        return data
+    } catch (error) {
+        return null
+    }
+}
+
+export const createBlog = async ({ title, subtitle, detail, photoUrl, tags }: CreateBlog) => {
     try {
         await connectToDatabase()
 
         const newBlog = await Blog.create({
-            user: userId,
+            user: process.env.USER_ID || "",
             title: title,
+            subtitle: subtitle,
             detail: detail,
             photoUrl: photoUrl,
-            status: "659a7ea34d148227282d3fcb"
+            status: "659a7ea34d148227282d3fcb",
+            tags: tags.map((tag) => tag)
         })
 
         return newBlog._id

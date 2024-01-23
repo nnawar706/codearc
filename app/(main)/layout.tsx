@@ -15,7 +15,7 @@ export const metadata: Metadata = {
         title: 'CodeArc',
         url: 'https://codearc.vercel.app/',
         description: 'Explore insightful articles, tutorials, and personal reflections on the ever-evolving landscape of software development at CodeArc.',
-        images: ['https://www.primefaces.org/static/social/sakai-react.png'],
+        images: ['https://codearc.vercel.app/layout/images/logo-dark.svg'],
         ttl: 604800
     },
     icons: {
