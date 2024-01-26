@@ -5,21 +5,27 @@ import { Button } from "primereact/button"
 import { useRouter } from 'next/navigation';
 import { FileUpload } from 'primereact/fileupload';
 import { InputText } from 'primereact/inputtext';
-import { Editor } from 'primereact/editor';
+import { Editor, EditorTextChangeEvent } from 'primereact/editor';
 import { Toast } from 'primereact/toast';
 import { Chips } from 'primereact/chips';
 
 import callToast from '../../lib/helper';
 import { useUploadThing } from '../../lib/uploadthing'
+import { MultiSelect } from 'primereact/multiselect';
+import { useFetch } from '../hooks/useFetch';
+import { ITag } from '../../types/models';
 
 const Draft = ({ id }: {id?: string}) => {
     const router = useRouter()
     const toast = useRef<Toast>(null)
     const coverImageRef = useRef<any>()
     const [loading, setLoading] = useState<boolean>(false)
-    const [detail, setDetail] = useState<string>("")
+    const [detail, setDetail] = useState<string | null>(null)
     const [coverImage, setCoverImage] = useState<File | null>(null)
+    const [selectedTags, setSelectedTags] = useState<ITag[] | null>(null)
+    const [status, setStatus] = useState<String | null>(null)
     const { startUpload } = useUploadThing('imageUploader')
+    const {data: tags, loading: loader} = useFetch(`/api/tags/get_all`)
 
     let blogData = {
         title: "",
@@ -65,13 +71,13 @@ const Draft = ({ id }: {id?: string}) => {
 
                 imageUrl = uploadedImage[0].url
             }
-                    
+
             let payload: any = {
                 title: data.title,
                 subtitle: data.subtitle,
                 detail: detail,
                 photoUrl: imageUrl,
-                tags: data.tags,
+                tags: selectedTags?.map((tag: ITag) => {return tag._id}),
             }
 
             const res = await fetch(`/api/blogs/create`, {
@@ -109,11 +115,11 @@ const Draft = ({ id }: {id?: string}) => {
         {
             return 'Subtitle field is required.'
         }
-        if (detail === '')
+        if (detail === '' || detail === null)
         {
             return 'Detail field is required.'
         }
-        if (data.tags.length == 0)
+        if (!selectedTags)
         {
             return 'Select at least one tag.'
         }
@@ -122,6 +128,12 @@ const Draft = ({ id }: {id?: string}) => {
             return 'Cover image is required.'
         }
         return null
+    }
+
+    const selectTagTemplate = (row: ITag) => {
+        return (
+            <p>{row.name}</p>
+        )
     }
 
     useEffect(() => {
@@ -158,10 +170,8 @@ const Draft = ({ id }: {id?: string}) => {
                             </span>
                         </div>
                         <div>
-                            <Button className="mr-3" label="Save" severity="info" outlined 
-                            onClick={createOrUpdateBlog} disabled={loading}/>
-                            <Button label="Publish" severity="info" 
-                            // onClick={handleSubmit}
+                            <Button label="Save" severity="info" disabled={loading}
+                            onClick={createOrUpdateBlog}
                             />
                         </div>
                     </div>
@@ -206,21 +216,16 @@ const Draft = ({ id }: {id?: string}) => {
                                 onChange={handleChange}/>
                         </div>
                         <div className="col-12">
-                            <Chips className="w-full p-fluid" placeholder="Add Tags"
-                            value={data.tags}
-                            onChange={(e) => {
-                                setData((prev: any) => ({
-                                    ...prev,
-                                    tags: e.value
-                                }));
-                            }}/>
+                            <MultiSelect className="w-full p-fluid" placeholder="Add Tags" display="chip"
+                            options={tags} optionLabel="name" itemTemplate={selectTagTemplate}
+                            onChange={(e) => setSelectedTags(e.value)} value={selectedTags}/>
                         </div>
                         <div className="col-12 field">
                             <Editor
                             style={{ height: "500px" }}
-                            value={detail}
-                            placeholder={"Write your thoughts..."}
-                            onTextChange={(e) => setDetail(e.textValue)}/>
+                            value={detail || ''}
+                            placeholder="Write your thoughts..."
+                            onTextChange={(e: EditorTextChangeEvent) => setDetail(e.htmlValue)}/>
                         </div>
                     </div>
                 </div>

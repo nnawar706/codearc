@@ -83,3 +83,7 @@ export const handleError = (error: unknown) => {
 
 export const { UploadButton, UploadDropzone, Uploader } =
     generateComponents<OurFileRouter>();
+
+export const openLink = (link: string) => {
+    window.open(link, "_blank");
+}
