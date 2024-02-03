@@ -6,16 +6,15 @@ import Link from 'next/link';
 import { Dropdown } from 'primereact/dropdown';
 import { useState } from 'react';
 import { Avatar } from 'primereact/avatar';
-
+import { useRouter } from 'next/navigation';
 
 import Loader from './loader';
 import { useFetch } from '../../demo/hooks/useFetch';
 import { DataView } from 'primereact/dataview';
 import { Chip } from 'primereact/chip';
 import { ITag } from '../../types/models';
-import { useRouter } from 'next/navigation';
 import { getBlog } from '../../types/blog';
-import { openLink } from '../../lib/utils';
+import { openLink, stripHtmlTagsAndLimit } from '../../lib/utils';
 
 
 const Feed = () => {
@@ -52,9 +51,9 @@ const Feed = () => {
                                     return <Chip key={index} label={tag.name}/>
                                 })}
                                 </div>
-                                {/* <p className="mt-2">
-                                    {`${blog.detail.substring(0, 140)}...`}
-                                </p> */}
+                                <p className="mt-2">
+                                    {`${stripHtmlTagsAndLimit(blog.detail, 40)}...`}
+                                </p>
                                 <div className="flex flex-row gap-2 mt-4">
                                     <div className="flex align-items-center">
                                         <i className="pi pi-eye mr-1"></i>
@@ -80,12 +79,15 @@ const Feed = () => {
                     }}
                 >
                     <div>
-                        <div className="text-blue-100 font-medium text-lg mt-2 mb-3">Level up your publishing with our new suite of premium features</div>
+                        <div className="text-blue-100 font-medium text-lg mt-2 mb-3">
+                            Join me on my journey of endless lines of code, problem-solving, and innovation. 
+                            Happy coding!
+                        </div>
                         <div className="text-white font-medium text-3xl">Introducing CodeArc</div>
                     </div>
                     <div className="mt-4 mr-auto md:mt-0 md:mr-0">
-                        <Link href="https://blocks.primereact.org" className="p-button font-bold px-5 py-3 p-button-warning p-button-rounded p-button-raised">
-                            Upgrade Now
+                        <Link href="/about" className="p-button font-bold px-5 py-3 p-button-warning p-button-rounded p-button-raised">
+                            Learn More
                         </Link>
                     </div>
                 </div>
@@ -191,7 +193,7 @@ const Feed = () => {
                                     <br/>Email: nawernafisa8@gmail.com</p>
                                     <p className="text-500">If you like CodeArc, give it a star 
                                     <span className="text-blue-500 cursor-pointer" 
-                                    onClick={() => openLink('https://')}>{" "}<u>here</u></span></p>
+                                    onClick={() => openLink('https://github.com/nnawar706/codearc_next14')}>{" "}<u>here</u></span></p>
                                 </div>
                             </div>
                         </div>

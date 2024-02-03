@@ -42,16 +42,6 @@ export const formatDateTime = (dateString: Date) => {
 
 export const convertFileToUrl = (file: File) => URL.createObjectURL(file)
 
-export const formatPrice = (price: string) => {
-    const amount = parseFloat(price)
-    const formattedPrice = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-    }).format(amount)
-
-    return formattedPrice
-}
-
 export function formUrlQuery({ params, key, value }: UrlQueryParams) {
     const currentUrl = qs.parse(params)
 
@@ -86,4 +76,17 @@ export const { UploadButton, UploadDropzone, Uploader } =
 
 export const openLink = (link: string) => {
     window.open(link, "_blank");
+}
+
+export function stripHtmlTagsAndLimit(text: string, limit: number) {
+    // Remove HTML tags
+    const strippedText = text.replace(/<[^>]*>/g, '');
+
+    // Split the text into words
+    const words = strippedText.split(/\s+/);
+
+    // Join the first `limit` words
+    const limitedText = words.slice(0, limit).join(' ');
+
+    return limitedText;
 }
