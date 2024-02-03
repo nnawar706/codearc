@@ -11,7 +11,7 @@ import { Button } from 'primereact/button'
 import { useFetch } from '../../../demo/hooks/useFetch'
 import { getBlog } from '../../../types/blog'
 
-const page = () => {
+const About = () => {
     const { data, loading, totalData } = useFetch('/api/blogs/get_all?page=1')
 
     const blogHistoryDataContent = (row: getBlog) => {
@@ -258,4 +258,4 @@ const page = () => {
     )
     }
 
-export default page
+export default About
