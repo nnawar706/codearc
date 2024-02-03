@@ -1,13 +1,12 @@
-'use client'
+"use client"
 
-import React, { useContext } from 'react'
+import React from 'react'
 import { Avatar } from 'primereact/avatar'
 
-import { LayoutContext } from '../../../layout/context/layoutcontext'
 import { Image } from 'primereact/image'
+import { Timeline } from 'primereact/timeline'
 
 const page = () => {
-    const { layoutConfig, setLayoutConfig } = useContext(LayoutContext);
     return (
         <div className="grid">
             <div className="col-10 col-offset-1">
@@ -109,6 +108,18 @@ const page = () => {
                                     </div>
                                 </div>
                             </div>
+                            {/* <div className="col-12 xl:col-4 md:col-6"> */}
+                                {/* <div className="card"> */}
+                                    {/* <div className="text-800 text-xl font-semibold mb-3">
+                                        History
+                                    </div> */}
+                                    {/* <Timeline
+                                        // value={transactionHistoryData}
+                                        // marker={transactionHistoryMarker}
+                                        // content={transactionHistoryDataContent}
+                                    /> */}
+                                {/* </div> */}
+                            {/* </div> */}
                         </div>
                     </div>
                 </div>
