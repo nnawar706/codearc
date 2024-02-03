@@ -1,6 +1,8 @@
 import { Metadata } from 'next';
 import React from 'react';
+
 import LayoutPublic from '../../layout/layout-public';
+import './global.css'
 
 interface SimpleLayoutProps {
     children: React.ReactNode;
