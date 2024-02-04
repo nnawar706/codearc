@@ -1,44 +1,6 @@
 import qs from 'query-string'
-import { generateComponents } from "@uploadthing/react"
 
-import { UrlQueryParams, RemoveUrlQueryParams } from '../types/general'
-import type { OurFileRouter } from '../app/api/uploadthing/core'
-
-export const formatDateTime = (dateString: Date) => {
-    const dateTimeOptions: Intl.DateTimeFormatOptions = {
-        weekday: 'short', // abbreviated weekday name (e.g., 'Mon')
-        month: 'short', // abbreviated month name (e.g., 'Oct')
-        day: 'numeric', // numeric day of the month (e.g., '25')
-        hour: 'numeric', // numeric hour (e.g., '8')
-        minute: 'numeric', // numeric minute (e.g., '30')
-        hour12: true, // use 12-hour clock (true) or 24-hour clock (false)
-    }
-
-    const dateOptions: Intl.DateTimeFormatOptions = {
-        weekday: 'short', // abbreviated weekday name (e.g., 'Mon')
-        month: 'short', // abbreviated month name (e.g., 'Oct')
-        year: 'numeric', // numeric year (e.g., '2023')
-        day: 'numeric', // numeric day of the month (e.g., '25')
-    }
-
-    const timeOptions: Intl.DateTimeFormatOptions = {
-        hour: 'numeric', // numeric hour (e.g., '8')
-        minute: 'numeric', // numeric minute (e.g., '30')
-        hour12: true, // use 12-hour clock (true) or 24-hour clock (false)
-    }
-
-    const formattedDateTime: string = new Date(dateString).toLocaleString('en-US', dateTimeOptions)
-
-    const formattedDate: string = new Date(dateString).toLocaleString('en-US', dateOptions)
-
-    const formattedTime: string = new Date(dateString).toLocaleString('en-US', timeOptions)
-
-    return {
-        dateTime: formattedDateTime,
-        dateOnly: formattedDate,
-        timeOnly: formattedTime,
-    }
-}
+import {RemoveUrlQueryParams, UrlQueryParams} from '../types/general'
 
 export const convertFileToUrl = (file: File) => URL.createObjectURL(file)
 
@@ -71,22 +33,14 @@ export const handleError = (error: unknown) => {
     throw new Error(typeof error === 'string' ? error : JSON.stringify(error))
 }
 
-export const { UploadButton, UploadDropzone, Uploader } =
-    generateComponents<OurFileRouter>();
-
 export const openLink = (link: string) => {
     window.open(link, "_blank");
 }
 
 export function stripHtmlTagsAndLimit(text: string, limit: number) {
-    // Remove HTML tags
     const strippedText = text.replace(/<[^>]*>/g, '');
 
-    // Split the text into words
     const words = strippedText.split(/\s+/);
 
-    // Join the first `limit` words
-    const limitedText = words.slice(0, limit).join(' ');
-
-    return limitedText;
+    return words.slice(0, limit).join(' ');
 }
