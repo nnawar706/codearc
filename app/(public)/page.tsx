@@ -6,15 +6,15 @@ import Link from 'next/link';
 import { Dropdown } from 'primereact/dropdown';
 import { useState } from 'react';
 import { Avatar } from 'primereact/avatar';
-
+import { useRouter } from 'next/navigation';
 
 import Loader from './loader';
 import { useFetch } from '../../demo/hooks/useFetch';
 import { DataView } from 'primereact/dataview';
 import { Chip } from 'primereact/chip';
 import { ITag } from '../../types/models';
-import { useRouter } from 'next/navigation';
 import { getBlog } from '../../types/blog';
+import { openLink, stripHtmlTagsAndLimit } from '../../lib/utils';
 
 
 const Feed = () => {
@@ -52,9 +52,9 @@ const Feed = () => {
                                 })}
                                 </div>
                                 <p className="mt-2">
-                                    {`${blog.detail.substring(0, 140)}...`}
+                                    {`${stripHtmlTagsAndLimit(blog.detail, 40)}...`}
                                 </p>
-                                <div className="flex flex-row gap-2">
+                                <div className="flex flex-row gap-2 mt-4">
                                     <div className="flex align-items-center">
                                         <i className="pi pi-eye mr-1"></i>
                                         {blog.readers}
@@ -79,12 +79,15 @@ const Feed = () => {
                     }}
                 >
                     <div>
-                        <div className="text-blue-100 font-medium text-lg mt-2 mb-3">Level up your publishing with our new suite of premium features</div>
-                        <div className="text-white font-medium text-3xl">Introducing CodeArc Pro</div>
+                        <div className="text-blue-100 font-medium text-lg mt-2 mb-3">
+                            Join me on my journey of endless lines of code, problem-solving, and innovation. 
+                            Happy coding!
+                        </div>
+                        <div className="text-white font-medium text-3xl">Introducing CodeArc</div>
                     </div>
                     <div className="mt-4 mr-auto md:mt-0 md:mr-0">
-                        <Link href="https://blocks.primereact.org" className="p-button font-bold px-5 py-3 p-button-warning p-button-rounded p-button-raised">
-                            Upgrade Now
+                        <Link href="/about" className="p-button font-bold px-5 py-3 p-button-warning p-button-rounded p-button-raised">
+                            Learn More
                         </Link>
                     </div>
                 </div>
@@ -110,7 +113,7 @@ const Feed = () => {
 
                             {/* drafts section */}
 
-                            <div className="card">
+                            {/* <div className="card">
                                 <div className="flex flex-column">
                                     <div className="flex align-items-center justify-content-between flex-wrap">
                                         <h5 className="text-800">Drafts</h5>
@@ -131,11 +134,11 @@ const Feed = () => {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
                             {/* trending articles */}
 
-                            <div className="card">
+                            {/* <div className="card">
                                 <div className="flex flex-column">
                                     <div className="flex align-items-center justify-content-between flex-wrap">
                                         <h5 className="text-800">Treding Articles</h5>
@@ -155,78 +158,42 @@ const Feed = () => {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
                             {/* bookmarks section */}
 
-                            <div className="card">
+                            {/* <div className="card">
                                 <div className="flex flex-column">
                                     <h5 className="text-800">Bookmarks</h5>
                                     <div className="flex justify-content-center">
                                         Nothing here yet 👋
                                     </div>
                                 </div>
-                            </div>
-
-                            {/* challenges/badges section */}
-
-                            <div className="card">
-                                <div className="flex flex-column">
-                                    <h5 className="text-800">Challenges</h5>
-                                    <div>
-                                        <TabView>
-                                            <TabPanel header="Up For Grabs">
-                                                <div className="h-8rem">
-                                                    <div className="flex">
-                                                        <div className="w-4rem h-4rem bg-primary flex align-items-center justify-content-center my-2 mr-3">2</div>
-                                                        <div className="w-15rem h-4rem">
-                                                            <div className="">    
-                                                                <span className="font-medium">#2Articles1Week</span>
-                                                                <p className="text-700">Become better at technical writing; accept CordeArc writing challenge for four weeks</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="my-3">
-                                                    <div className="flex">
-                                                        <div className="w-4rem h-4rem bg-primary flex align-items-center justify-content-center my-2 mr-3">2</div>
-                                                        <div className="w-15rem h-4rem">
-                                                            <div className="">    
-                                                                <span className="font-medium">#2Articles1Week</span>
-                                                                <p className="text-700">Become better at technical writing; accept CordeArc writing challenge for four weeks</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </TabPanel>
-                                            <TabPanel header="Completed">
-                                                <div className="my-3">
-                                                    <div className="flex">
-                                                        <div className="w-4rem h-4rem bg-primary flex align-items-center justify-content-center my-2 mr-3">2</div>
-                                                        <div className="w-15rem h-4rem">
-                                                            <div className="">    
-                                                                <span className="font-medium">#2Articles1Week</span>
-                                                                <p className="text-700">Become better at technical writing; accept CordeArc writing challenge for four weeks</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </TabPanel>
-                                        </TabView>
-                                    </div>
-                                </div>
-                            </div>
+                            </div> */}
 
                             {/* external links */}
 
                             <div className="card">
-                                <div className="flex flex-column mb-2 border-bottom-1 surface-border">
-                                    <p className="font-medium">Connect with us</p>
-                                    <div className="flex justify-content-start flex-wrap gap-3">
-                                        <Button icon="pi pi-facebook" rounded outlined aria-label="Filter" />
-                                        <Button icon="pi pi-youtube" rounded outlined aria-label="Filter" />
-                                        <Button icon="pi pi-linkedin" rounded outlined aria-label="Filter" />
+                                <div className="flex flex-column border-bottom-1 surface-border">
+                                    <div className="mb-2">
+                                        <p className="font-medium">Connect with me</p>
+                                        <div className="flex justify-content-start flex-wrap gap-3">
+                                            <Button icon="pi pi-github" rounded outlined aria-label="Filter" 
+                                            onClick={() => openLink('https://github.com/nnawar706')}/>
+                                            <Button icon="pi pi-twitter" rounded outlined aria-label="Filter" 
+                                            onClick={() => openLink('https://twitter.com/nnawar706')}/>
+                                            <Button icon="pi pi-linkedin" rounded outlined aria-label="Filter" 
+                                            onClick={() => openLink('https://www.linkedin.com/in/nafisa-nawer/')}/>
+                                        </div>
                                     </div>
+                                </div>
+                                <div className="mt-2">
+                                    <p>Nafisa Nawer
+                                    <br/>Software Engineer @ Selopia
+                                    <br/>Email: nawernafisa8@gmail.com</p>
+                                    <p className="text-500">If you like CodeArc, give it a star 
+                                    <span className="text-blue-500 cursor-pointer" 
+                                    onClick={() => openLink('https://github.com/nnawar706/codearc_next14')}>{" "}<u>here</u></span></p>
                                 </div>
                             </div>
                         </div>

@@ -24,4 +24,5 @@ export interface getBlog extends Blog {
     status: IBlogStatus;
     readers: number;
     tags: ITag[];
+    createdAt: Date;
 }
