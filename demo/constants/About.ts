@@ -1,22 +1,16 @@
 export const quotes = [
-    {detail: "", author: ""},
-    {detail: "", author: ""},
-    {detail: "", author: ""},
-    {detail: "", author: ""},
+    {detail: "If you think about computer programming, it's as antisocial as it gets.", author: "Shawn Fanning"},
+    {detail: "You might not think that programmers are artists, but programming is an extremely creative profession. It's logic based creativity.", author: "John Romero"},
+    {detail: "Most good programmers do programming not because they expect to get paid or get adulation by the public, but because it is fun to program.", author: "Linus Torvalds"},
+    {detail: "The trouble with programmers is that you can never tell what a programmer is doing until it's too late.", author: "Seymour Cray"},
     {detail: "There are only two hard things in computer science: cache invalidation and naming variables.", author: "Phil Karlton"},
-    {detail: "", author: ""},
+    {detail: "It's a curious thing about programmers: not only do we not learn from our mistakes, we also don't learn from our successes.", author: "Keith Braithwaite"},
     {detail: "Coding is not just code, that is a live thing to serve everyone!", author: "Ming Song"},
-    {detail: "", author: ""},
+    {detail: "If debugging is the process of removing software bugs, then programming must be the process of putting them in.", author: "Edsger Dijkstra"},
     {detail: "Programs must be written for people to read, and only incidentally for machines to execute.", author: "Harold Abelson"},
     {detail: "Programming is thinking, not typing.", author: "Casey Patton"},
-    {detail: "", author: ""},
-    {detail: "", author: ""},
-    {detail: "", author: ""},
-    {detail: "", author: ""},
     {detail: "Code is like humor. When you have to explain it, it’s bad.", author: "Cory House"},
-    {detail: "", author: ""},
     {detail: "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.", author: "Martin Fowler"},
-    {detail: "", author: ""},
 ]
 
 export const about = {
