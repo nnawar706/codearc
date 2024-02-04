@@ -15,7 +15,7 @@ import {about, expertise, languages, quotes} from "../../../demo/constants/About
 import Loader from "./loader";
 
 const About = () => {
-    const quote = quotes[Math.floor(Math.random() * 18)]
+    const quote = quotes[Math.floor(Math.random() * 11)]
     const { data, loading } = useFetch('/api/blogs/get_all?page=1')
 
     const blogHistoryDataContent = (row: getBlog) => {
