@@ -16,7 +16,7 @@ import Loader from "./loader";
 
 const About = () => {
     const quote = quotes[Math.floor(Math.random() * 11)]
-    const { data, loading } = useFetch('/api/blogs/get_all?page=1')
+    const { data: blogs, loading, totalData } = useFetch('/api/blogs/get_all?page=1')
 
     const blogHistoryDataContent = (row: getBlog) => {
         return (
@@ -99,7 +99,7 @@ const About = () => {
                                     <div className="flex justify-content-between mb-2">
                                         <div>
                                             <span className="block text-500 font-medium mb-3">Articles</span>
-                                            <div className="text-800 font-medium text-md">5</div>
+                                            <div className="text-800 font-medium text-md">{totalData}</div>
                                         </div>
                                         <div className="flex align-items-center justify-content-center bg-blue-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
                                             <i className="pi pi-file text-blue-500 text-lg" />
@@ -138,7 +138,7 @@ const About = () => {
                                     <div className="flex justify-content-between mb-2">
                                         <div>
                                             <span className="block text-500 font-medium mb-3">Last Activity</span>
-                                            <div className="text-800 font-medium text-md">15th Jan, 2024</div>
+                                            <div className="text-800 font-medium text-md">{blogs && blogs.length != 0 ? moment(blogs[0].createdAt).format('ll') : 'Jan 20, 2024'}</div>
                                         </div>
                                         <div className="flex align-items-center justify-content-center bg-green-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
                                             <i className="pi pi-calendar text-green-500 text-lg" />
@@ -161,7 +161,7 @@ const About = () => {
                                         Recent Articles
                                     </p>
                                     <Timeline
-                                        value={data}
+                                        value={blogs}
                                         marker={blogHistoryMarker}
                                         content={blogHistoryDataContent}
                                     />

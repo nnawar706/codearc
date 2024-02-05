@@ -15,6 +15,7 @@ import { Chip } from 'primereact/chip';
 import { ITag } from '../../types/models';
 import { getBlog } from '../../types/blog';
 import { openLink, stripHtmlTagsAndLimit } from '../../lib/utils';
+import moment from "moment";
 
 
 const Feed = () => {
@@ -32,7 +33,7 @@ const Feed = () => {
                                 <Avatar image="/demo/images/login/avatar.png" size="large" shape="circle"/>
                             </div>
                             <span className="text-800 line-height-3 font-medium">
-                                Nafisa Nawer<br /><span className="text-600 font-normal">29th Oct, 2023</span>
+                                Nafisa Nawer<br /><span className="text-600 font-normal">{moment(blog.createdAt).format('ll')}</span>
                             </span>
                         </div>
                         <div className="flex flex-column justify-content-center py-2 z-index border-rounded">
