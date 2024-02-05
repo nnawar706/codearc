@@ -7,16 +7,16 @@ import { Dropdown } from 'primereact/dropdown';
 import { useState } from 'react';
 import { Avatar } from 'primereact/avatar';
 import { useRouter } from 'next/navigation';
+import { Image } from 'primereact/image';
+import { DataView } from 'primereact/dataview';
+import { Chip } from 'primereact/chip';
 
 import Loader from './loader';
 import { useFetch } from '../../demo/hooks/useFetch';
-import { DataView } from 'primereact/dataview';
-import { Chip } from 'primereact/chip';
 import { ITag } from '../../types/models';
 import { getBlog } from '../../types/blog';
 import { openLink, stripHtmlTagsAndLimit } from '../../lib/utils';
 import moment from "moment";
-
 
 const Feed = () => {
     const { push } = useRouter()
@@ -38,10 +38,10 @@ const Feed = () => {
                         </div>
                         <div className="flex flex-column justify-content-center py-2 z-index border-rounded">
                             <div>
-                                <img 
+                                <Image
+                                width="100%" 
                                 src={blog.photoUrl} 
-                                alt={blog.title.split(" ", 1).join("-")}
-                                className="w-full border-round"/>
+                                alt={blog.title.split(" ", 1).join("-")}/>
                             </div>
                             <div className="mt-2">
                                 <h5 className="text-800 cursor-pointer hover:underline"
@@ -55,8 +55,8 @@ const Feed = () => {
                                 <p className="mt-2">
                                     {`${stripHtmlTagsAndLimit(blog.detail, 40)}...`}
                                 </p>
-                                <div className="flex flex-row gap-2 mt-4">
-                                    <div className="flex align-items-center">
+                                <div className="flex flex-row mt-4">
+                                    <div className="inline-flex align-items-center">
                                         <i className="pi pi-eye mr-1"></i>
                                         {blog.readers}
                                     </div>
@@ -97,12 +97,13 @@ const Feed = () => {
                     <div className="col-12 lg:col-8">
                         <div className="card">
                             <DataView
+                            totalRecords={totalData}
                             dataKey='id'
                             className="w-full"
                             emptyMessage='No article found'
                             value={data}
                             paginator
-                            rows={1}
+                            rows={5}
                             layout="grid"
                             itemTemplate={itemTemplate}
                             ></DataView>

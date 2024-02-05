@@ -52,6 +52,12 @@ export async function getOne(id: string) {
     try {
         await connectToDatabase()
 
+        // const blog = Blog.findByIdAndUpdate(
+        //     id,
+        //     { $inc: { readers: 1 } },
+        //     { new: true }
+        // )
+
         const blog = Blog.findById(id)
 
         const data = await populateBlogs(blog)
