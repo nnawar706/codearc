@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { Avatar } from 'primereact/avatar'
 import moment from "moment"
 import { Image } from 'primereact/image'
@@ -15,8 +15,14 @@ import {about, expertise, languages, quotes} from "../../../demo/constants/About
 import Loader from "./loader";
 
 const About = () => {
-    const quote = quotes[Math.floor(Math.random() * 11)]
-    const { data, loading } = useFetch('/api/blogs/get_all?page=1')
+    const [quote, setQuote] = useState({detail: "", author: ""})
+    const { data: blogs, loading, totalData } = useFetch('/api/blogs/get_all?page=1')
+    const { data: cardData } = useFetch('/api/about')
+
+    useEffect(() => {
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        setQuote(quotes[randomIndex]);
+    }, []);
 
     const blogHistoryDataContent = (row: getBlog) => {
         return (
@@ -94,12 +100,12 @@ const About = () => {
                     </div>
                     <div className="col-12 lg:col-8">
                         <div className="grid">
-                            <div className="col-12 md:col-6 lg:col-3">
+                            <div className="col-12 lg:col-4">
                                 <div className="card mb-0">
                                     <div className="flex justify-content-between mb-2">
                                         <div>
                                             <span className="block text-500 font-medium mb-3">Articles</span>
-                                            <div className="text-800 font-medium text-md">5</div>
+                                            <div className="text-800 font-medium text-md">{totalData}</div>
                                         </div>
                                         <div className="flex align-items-center justify-content-center bg-blue-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
                                             <i className="pi pi-file text-blue-500 text-lg" />
@@ -107,12 +113,12 @@ const About = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-12 md:col-6 lg:col-3">
+                            <div className="col-12 lg:col-4">
                                 <div className="card">
                                     <div className="flex justify-content-between mb-2">
                                         <div>
                                             <span className="block text-500 font-medium mb-3">Drafts</span>
-                                            <div className="text-800 font-medium text-md">1</div>
+                                            <div className="text-800 font-medium text-md">{cardData?.total_draft_count}</div>
                                         </div>
                                         <div className="flex align-items-center justify-content-center bg-yellow-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
                                             <i className="pi pi-copy text-yellow-500 text-lg" />
@@ -120,25 +126,12 @@ const About = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-12 md:col-6 lg:col-3">
-                                <div className="card">
-                                    <div className="flex justify-content-between mb-2">
-                                        <div>
-                                            <span className="block text-500 font-medium mb-3">Visits</span>
-                                            <div className="text-800 font-medium text-md">152</div>
-                                        </div>
-                                        <div className="flex align-items-center justify-content-center bg-red-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
-                                            <i className="pi pi-users text-red-500 text-lg" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-12 md:col-6 lg:col-3">
+                            <div className="col-12 lg:col-4">
                                 <div className="card">
                                     <div className="flex justify-content-between mb-2">
                                         <div>
                                             <span className="block text-500 font-medium mb-3">Last Activity</span>
-                                            <div className="text-800 font-medium text-md">15th Jan, 2024</div>
+                                            <div className="text-800 font-medium text-md">{blogs && blogs.length != 0 ? moment(blogs[0].createdAt).format('ll') : 'Jan 20, 2024'}</div>
                                         </div>
                                         <div className="flex align-items-center justify-content-center bg-green-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
                                             <i className="pi pi-calendar text-green-500 text-lg" />
@@ -151,8 +144,12 @@ const About = () => {
                                     <p className="text-800 text-lg font-semibold mb-3">
                                         Today's Quote
                                     </p>
-                                    <p className="font-italic">{quote.detail}</p>
-                                    <p>- {quote.author}</p>
+                                    {quote && <>
+                                        <img src="/demo/images/about/quote-left.svg" width="12" className="mr-2"/>
+                                        <span className="font-italic line-height-3">{quote.detail}</span>
+                                        <img src="/demo/images/about/quote-right.svg" width="12" className="ml-2"/>
+                                    </>}
+                                    <p className="mt-2 font-medium">- {quote.author}</p>
                                 </div>
                             </div>
                             <div className="col-12 md:col-6">
@@ -161,7 +158,7 @@ const About = () => {
                                         Recent Articles
                                     </p>
                                     <Timeline
-                                        value={data}
+                                        value={blogs}
                                         marker={blogHistoryMarker}
                                         content={blogHistoryDataContent}
                                     />

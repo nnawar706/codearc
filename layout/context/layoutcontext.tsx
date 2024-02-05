@@ -67,18 +67,41 @@ export const LayoutProvider = ({ children }: ChildContainerProps) => {
             <>
                 <Head>
                     <title>CodeArc</title>
+
+                    <link rel="applie-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png"/>
+                    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png"/>
+
+                    {/* basic meta tags */}
                     <meta charSet="utf-8" />
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                    <meta name="robots" content="noindex, nofollow"/>
+                    <meta name="msapplication-TileColor" content="#0055ab"/>
+                    <meta name="theme-color" content="#ffffff"/>
+                    
+                    {/* open graph meta tags i.e. facebook, linkedin */}
+                    <meta property="og:title" content="CodeArc by Nafisa"/>
                     <meta 
-                        name="description" 
+                        property="og:description" 
                         content="Explore insightful articles, tutorials, and personal reflections on the ever-evolving landscape of software development at CodeArc."
                     />
-                    <meta name="robots" content="index, follow"/>
-                    <meta name="viewport" content="initial-scale=1, width=device-width" />
-                    <meta property="og:type" content="website"/>
-                    <meta property="og:title" content="CodeArc by Nafisa"/>
+                    <meta property="og:image" content="https://codearc.vercel.app/layout/images/logo-dark.svg"/>
                     <meta property="og:url" content="https://codearc.vercel.app"/>
-                    <meta
-                        property="og:description"
+                    <meta property="og:type" content="website"/>
+                    <meta property="og:ttl" content="604800"/>
+
+                    {/* twitter meta tags */}
+                    <meta name="twitter:card" content="https://codearc.vercel.app/layout/images/logo-dark.svg"/>
+                    <meta name="twitter:title" content="CodeArc by Nafisa"/>
+                    <meta 
+                        property="twitter:description" 
+                        content="Explore insightful articles, tutorials, and personal reflections on the ever-evolving landscape of software development at CodeArc."
+                    />
+                    <meta name="twitter:image" content="https://codearc.vercel.app/layout/images/logo-dark.svg"/>
+
+                    {/* fallback meta tags */}
+                    <meta 
+                        name="description" 
                         content="Explore insightful articles, tutorials, and personal reflections on the ever-evolving landscape of software development at CodeArc."
                     />
                 </Head>
